@@ -1,11 +1,16 @@
 class ArticlesController < ApplicationController
+
     before_action :set_art, only: [:show, :edit, :update, :destroy]
+    before_action :require_user, except: [:show, :index]
+    before_action :require_same_user, only: [:edit, :update, :delete]
+
     def show
     end
 
     def index
-        @arts=Article.all
+        @arts=Article.paginate(page: params[:page], per_page: 5)
     end
+
     def new
         @art=Article.new
     end
@@ -15,6 +20,8 @@ class ArticlesController < ApplicationController
 
     def create
         @art=Article.new(art_params)
+        @art.user=current_user
+        #nd(@art.user_id)
         if @art.save
             flash[:notice] = "Atrical was created successfully."
             redirect_to @art
@@ -47,4 +54,12 @@ class ArticlesController < ApplicationController
     def art_params
         params.require(:article).permit(:title, :description)
     end
+
+    def require_same_user
+        if current_user != @art.user && !current_user.admin?
+            flash[:alert] = "you can only edit/delete your articles"
+            redirect_to @art
+        end
+    end
+
 end
