@@ -1,8 +1,8 @@
 <div class="container">
     <% if @user.errors.any? %>
         <div class="alert alert-danger" role="alert">
-            <h2>The following errors :</h2>
-            <ul>
+        <h4 class="alert-heading">The following errors :</h4>
+        <ul>
             <% @user.errors.full_messages.each do |msg| %>
                 <li><%= msg %></li>
             <%end%>

@@ -1,4 +1,4 @@
-<!-- require 'test_helper'
+require 'test_helper'
 
 class CategoryTest < ActiveSupport::TestCase
 
@@ -31,4 +31,4 @@ class CategoryTest < ActiveSupport::TestCase
         assert_not @category.valid?
     end
 
-end -->
+end
